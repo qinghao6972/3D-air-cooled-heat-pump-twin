@@ -1,0 +1,30 @@
+# =============================================================
+#  换行符 / 二进制标记
+#
+#  目的：任何人 clone 下来，不受自己 core.autocrlf 设置影响，
+#        双击「启动.bat」都能正常跑起来。
+#
+#  cmd.exe 是按字节偏移解析批处理文件的，换行不统一会让它跳进
+#  行中间；PowerShell 5.1 也是 CRLF 下行为最稳。所以两个启动脚本
+#  强制 CRLF，其余文本在校验通过后统一 LF。
+# =============================================================
+
+# 默认：自动识别文本文件，仓库内存 LF，检出后也是 LF
+* text=auto eol=lf
+
+# Windows 启动脚本：必须 CRLF
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+
+# 二进制资产：禁止任何换行 / 编码转换
+*.glb   binary
+*.blend binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
