@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>风冷热泵机房 · 数字孪生系统 | Air-Cooled Heat Pump Plant Room Digital Twin</title>
+<link rel="stylesheet" href="css/app.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/build/three.module.js",
+    "three/addons/": "./vendor/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<!-- ============================ 顶栏 ============================ -->
+<header id="topbar" class="hud">
+  <div class="brand">
+    <div class="logo"></div>
+    <div>
+      <h1>风冷热泵机房 · 数字孪生系统</h1>
+      <p>Air-Cooled Heat Pump Plant Room · Digital Twin</p>
+    </div>
+  </div>
+  <div class="topstats" id="topstats"></div>
+  <div class="topright">
+    <div class="clock"><b id="clock">--:--:--</b><i id="date">----</i></div>
+    <div class="badge ok" id="sysbadge"><span></span>系统正常</div>
+  </div>
+</header>
+
+<!-- ============================ 左侧 ============================ -->
+<aside id="left" class="hud">
+  <section class="panel">
+    <h2>系统运行参数 <em>System KPI</em></h2>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section class="panel">
+    <h2>实时趋势 <em>最近 3 分钟</em></h2>
+    <canvas id="trend" width="660" height="230"></canvas>
+    <div class="legend">
+      <span><i style="background:#3ea0ff"></i>供水温度</span>
+      <span><i style="background:#ff7a59"></i>回水温度</span>
+      <span><i style="background:#22d39a"></i>负荷率</span>
+      <span><i style="background:#ffc857"></i>COP</span>
+    </div>
+  </section>
+
+  <section class="panel grow">
+    <h2>设备清单 <em id="devCount">--</em></h2>
+    <div class="tree" id="tree"></div>
+  </section>
+</aside>
+
+<!-- ============================ 右侧 ============================ -->
+<aside id="right" class="hud">
+  <section class="panel" id="detail">
+    <h2>设备详情 <em>Device Detail</em></h2>
+    <div class="empty" id="detailEmpty">
+      <div class="ico"></div>
+      <p>点击场景中的设备查看实时点位</p>
+      <p class="sub">左键旋转 · 右键平移 · 滚轮缩放 · 双击聚焦</p>
+    </div>
+    <div id="detailBody" hidden></div>
+  </section>
+</aside>
+
+<!-- ============================ 底栏 ============================ -->
+<footer id="bottom" class="hud">
+  <div class="group">
+    <label>视角</label>
+    <div class="btns" id="viewbar"></div>
+  </div>
+  <div class="group grow">
+    <label>实时事件 / 告警 <em id="evtCount"></em></label>
+    <div class="events" id="events"></div>
+  </div>
+  <div class="group">
+    <label>图层</label>
+    <div class="btns" id="layers"></div>
+  </div>
+</footer>
+
+<!-- ============================ 其它 ============================ -->
+<div id="tip" class="tip"></div>
+
+<div id="loading">
+  <div class="box">
+    <div class="ring"></div>
+    <h2>正在载入机房三维模型</h2>
+    <p id="loadMsg">IndustrialPlantRoom.glb</p>
+    <div class="bar"><i id="loadBar"></i></div>
+    <p class="pct" id="loadPct">0 %</p>
+  </div>
+</div>
+
+<div id="fatal" hidden>
+  <div class="box">
+    <h2>无法启动三维视图</h2>
+    <pre id="fatalMsg"></pre>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
